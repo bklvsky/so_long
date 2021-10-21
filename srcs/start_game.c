@@ -6,206 +6,93 @@
 /*   By: dselmy <dselmy@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 22:41:23 by dselmy            #+#    #+#             */
-/*   Updated: 2021/10/08 01:46:08 by dselmy           ###   ########.fr       */
+/*   Updated: 2021/10/21 03:49:33 by dselmy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
-int		start_win(t_win *win)
+void	get_start_pos(t_win *win, t_game *game)
 {
-	int		x_screen;
-	int		y_screen;
-
-	win->mlx = mlx_init();
-	if (!win->mlx)
-		return (0);
-	mlx_get_screen_size(win->mlx, &x_screen, &y_screen);
-	printf("x_screen = %d, y_screen = %d\n x_win = %d, y_win = %d,", x_screen, y_screen, win->x_win, win->y_win);
-	if (win->x_win > x_screen || win->y_win > y_screen)
+	if (win->flag_screen_x == 0)
+		win->start_draw_x = 0;
+	else
 	{
-		printf("fucked up resolution\n");
-		return (0);
+		if (game->plr_x * SCALE - win->img->width / 2 < 0)
+			win->start_draw_x = 0;
+		else if (game->plr_x * SCALE + win->img->width / 2 > win->map_x)
+			win->start_draw_x = (win->map_x - win->img->width) / SCALE;
+		else
+			win->start_draw_x = game->plr_x - (win->img->width / 2 / SCALE);
 	}
-	win->img = mlx_new_image(win->mlx, win->x_win, win->y_win);
-	if (!win->img)
+	if (win->flag_screen_y == 0)
+		win->start_draw_y = 0;
+	else
 	{
-		printf("no image for you\n");
-		return (0);
+		if (game->plr_y * SCALE - win->img->height/2 < 0)
+			win->start_draw_y = 0;
+		else if (game->plr_y * SCALE + win->img->height/2 > win->map_y)
+			win->start_draw_y = (win->map_y - win->img->height) / SCALE;
+		else
+			win->start_draw_y = game->plr_y - (win->img->height / 2 / SCALE);
 	}
-	printf("got an image\n");
-	win->addr = mlx_get_data_addr(win->img, &(win->bpp), &(win->line_len), &(win->en));
-	if (!win->addr)
-	{
-		mlx_destroy_image(win->mlx, win->img);
-		return (0);
-	}
-	win->win = mlx_new_window(win->mlx, win->x_win, win->y_win, "So_long");
-	if (!win->win)
-	{
-		mlx_destroy_image(win->mlx, win->img);
-		return (0);
-	}
-	return (1);
-/*	WINDOW SIZE MANAGEMENT -- TO DO LATER	
-	if (win->y_win > y_screen)
-		win->y_win = y_screen;
-	if (win->x_win > x_screen)
-		win->x_win = x_screen;*/
-//	win->img = mlx_new_image(win->mlx);
+//	printf("starty = %d, startx = %d\n", win->start_draw_y, win->start_draw_x);
 }
 
-void	get_win_res(t_win *win, char **map)
-{
-	printf("in getwinres\n");
-	win->x_win = ft_strlen(*map) * SCALE;
-	win->y_win = ft_charmtrx_len(map) * SCALE;
-	printf("ft_strlen = %ld, ft_mtrx_len = %ld\n", ft_strlen(*map), ft_charmtrx_len(map));
-	printf("in get win res x_win = %d, y_win = %d\n", win->x_win, win->y_win);
-}
-
-void	my_pixel_put(t_win *win, int x, int y, int color)
-{
-	char	*dst;
-	
-	dst = win->addr + (y * win->line_len + x * (win->bpp / 8));
-	*(unsigned int*)dst = color;
-}
-
-void	put_square(t_win *win, int x, int y, int color)
-{
-	int		i;
-	int		j;
-
-	i = 0;
-	while (i < SCALE)
-	{
-		j = 0;
-		while(j < SCALE)
-		{
-			my_pixel_put(win, x + j, y + i, color);
-			j += 1;
-		}
-		i += 1;
-	}
-}
-
-
-
-void	put_map(t_win *win, t_game *game, char **map)
+void	put_map(t_win *win, char **map)
 {
 	int		y;
 	int		x;
 
 	y = -1;
-	printf("in put map\n");
-	while (map[++y])
+	while (map[++y + win->start_draw_y])
 	{
 		x = -1;
-		while (map[y][++x])
+		while (map[y + win->start_draw_y][++x + win->start_draw_x])
 		{
-			if (map[y][x] == '1')
+			if (map[y + win->start_draw_y][x + win->start_draw_x] == '1')
 			{
-				put_square(win, x * SCALE, y * SCALE, WALL_COLOR);
+				put_square(win->img, win->tex_table[WALL_TEX], x * SCALE, y * SCALE); 
 				continue ;
 			}
-			put_square(win, x * SCALE, y * SCALE, FLOOR_COLOR);
-			if (map[y][x] == '0')
+			put_square(win->img, win->tex_table[FLOOR_TEX], x * SCALE, y * SCALE); 
+			if (map[y + win->start_draw_y][x + win->start_draw_x] == '0')
 				continue ;
-			if (map[y][x] == 'C')
-				put_square(win, x * SCALE, y * SCALE, CLLCT_COLOR);
-			else if (map[y][x] == 'E' && game->cllct == 0)
-				put_square(win, x * SCALE, y * SCALE, EXIT_COLOR_ON);
-			else if (map[y][x] == 'E' && game->cllct != 0)
-				put_square(win, x * SCALE, y * SCALE, EXIT_COLOR_OFF);
+			if (map[y + win->start_draw_y][x + win->start_draw_x] == 'C')
+				put_square(win->img, win->tex_table[CLLCT_TEX], x * SCALE, y * SCALE); 
+			else if (map[y + win->start_draw_y][x + win->start_draw_x] == 'E')
+				put_square(win->img, win->tex_table[EXIT_TEX], x * SCALE, y * SCALE); 
 		}
 	}
 }
 
+void	put_player(t_win *win, t_game *game)
+{
+	put_square(win->img, win->tex_table[PLR_TEX], (game->plr_x -\
+	 win->start_draw_x) * SCALE, (game->plr_y - win->start_draw_y) * SCALE);
+}
+
 void	render_game(char **map, t_game *game, t_win *win)
 {
-	put_map(win, game, map);
-	put_square(win, game->plr_x * SCALE, game->plr_y * SCALE, PLR_COLOR);
-	mlx_put_image_to_window(win->mlx, win->win, win->img, 0, 0);
+	mlx_do_sync(win->mlx);
+	get_start_pos(win, game);
+	put_map(win, map);
+	put_player(win, game);
+//	mlx_put_image_to_window(win->mlx, win->win, win->tex_table[PLR_TEX].img, game->plr_x * SCALE, game->plr_y * SCALE);
+//	put_square(win, game->plr_x * SCALE, game->plr_y * SCALE, PLR_COLOR);
+	mlx_put_image_to_window(win->mlx, win->win, win->img->img, 0, 0);
 	if (game->exit == 0)
 	{
 		printf("CONGRATULATIONS, YOU WON WITH THE SCORE OF %d\n", game->moves);
 	}
 }
 
-/*void	collect_treasure(char *treasure, t_game *game)
-{
-	*treasure = '0';
-	game->cllct -= 1;
-}*/
-
-void	move_player(char **map, t_game *game)
-{
-	game->moves += 1;
-	if (map[game->plr_y][game->plr_x] == 'C')
-	{
-		map[game->plr_y][game->plr_x] = '0';
-		game->cllct -= 1;
-		printf("coolectibles left: %d\n", game->cllct);
-	}
-	if (map[game->plr_y][game->plr_x] == 'E' && game->cllct == 0)
-		game->exit = 0;
-	printf("MOVES: %d\n", game->moves);
-}
-
-void	plr_up(char **map, t_game *game)
-{
-	if (map[game->plr_y - 1][game->plr_x] == '1')
-		return ;
-	game->plr_y -= 1;
-	move_player(map, game);
-}
-
-void	plr_down(char **map, t_game *game)
-{
-	if (map[game->plr_y + 1][game->plr_x] == '1')
-		return ;
-	game->plr_y += 1;
-	move_player(map, game);
-}
-
-void	plr_left(char **map, t_game *game)
-{
-	if (map[game->plr_y][game->plr_x - 1] == '1')
-		return ;
-	game->plr_x -= 1;
-	move_player(map, game);
-}
-
-void	plr_right(char **map, t_game *game)
-{
-	if (map[game->plr_y][game->plr_x + 1] == '1')
-		return ;
-	game->plr_x += 1;
-	move_player(map, game);
-}
-
-int		handle_keys(int key, t_data *all)
-{
-	if (key == 119)
-		plr_up(all->map, all->game);
-	else if (key == 115)
-		plr_down(all->map, all->game);
-	else if (key == 97)
-		plr_left(all->map, all->game);
-	else if (key == 100)
-		plr_right(all->map, all->game);
-	render_game(all->map, all->game, all->win);
-	if (all->game->exit == 0)
-		stop_game(all);
-	return (0);
-}
-
 void	launch_game(t_data *all)
 {
-	get_win_res(all->win, all->map);
+	get_map_res(all->win, all->map);
 	if (!start_win(all->win))
 		shutdown(all, NULL, "MiniLibX error");
+//	printf("started win w/o problems\n");
 	render_game(all->map, all->game, all->win);
 	mlx_key_hook(all->win->win, &handle_keys, all);
 	mlx_hook(all->win->win, 17, (1L<<17), &stop_game, all);

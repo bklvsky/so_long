@@ -6,7 +6,7 @@
 #    By: dselmy <dselmy@student.21-school.ru>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/27 21:46:39 by dselmy            #+#    #+#              #
-#    Updated: 2021/09/24 20:32:31 by dselmy           ###   ########.fr        #
+#    Updated: 2021/10/20 22:52:35 by dselmy           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,11 +26,11 @@ OBJ = $(SRCS:.c=.o)
 
 MLX_FLAGS = -lXext -lX11 -lm -lbsd
 
-FLAGS = -Wall -Werror -Wextra
+FLAGS = -g -Wall -Werror -Wextra
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
+$(NAME): $(OBJ) $(INC_DIR)/so_long.h
 		@make -C $(LIBFT_DIR)
 		@make -C $(MLX_DIR)
 		gcc -o $(NAME) $(FLAGS) -I$(INC_DIR) $(OBJ) $(LIBFT_DIR)libft.a $(MLX_DIR)libmlx_Linux.a\
