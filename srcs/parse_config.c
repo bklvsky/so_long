@@ -6,26 +6,11 @@
 /*   By: dselmy <dselmy@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 00:42:52 by dselmy            #+#    #+#             */
-/*   Updated: 2021/10/07 21:02:23 by dselmy           ###   ########.fr       */
+/*   Updated: 2021/10/22 19:06:46 by dselmy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
-
-
-
-/*
-void	*expand_arr(void *arr, unsigned size)
-{
-	void	*new;
-
-	new = (void *)malloc(size);
-	if (new)
-		ft_memccpy(new, arr, 0, size);
-	free(arr);
-	return (new);
-}
-*/
 
 void	read_conf(t_data *all)
 {
@@ -35,27 +20,15 @@ void	read_conf(t_data *all)
 	y = 0;
 	all->map = (char **)ft_calloc(2, sizeof(char *));
 	gnl_flag = get_next_line(all->map_fd, all->map);
-//	all->map[1] = NULL;
 	while (gnl_flag)
 	{
 		if (gnl_flag == -1)
 			shutdown(all, NULL, strerror(errno));
-//		printf("y = %d %s\n", y, all->map[y]);
 		y += 1;
 		all->map = ft_realloc_charmtrx(all->map, y + 1);
 		gnl_flag = get_next_line(all->map_fd, &all->map[y]);
-	/*	if (ft_strlen(all->map[y]) != all->map_x)
-			shutdown(all, NULL, "The all->map is not rectangular");*/
 	}
 	close(all->map_fd);
-//	printf("y = %d\n", y);
-/*	y = 0;
-	while (all->map[y])
-	{
-		printf("%d %s\n", y, all->map[y]);
-		y += 1;
-	}*/
-//	free_arr(all->map);
 }
 
 void	check_map(t_data *all)
@@ -81,22 +54,6 @@ void	check_map(t_data *all)
 	skip_newlines(all->map, &y);
 	if (all->map[y] != NULL)
 		shutdown(all, NULL, "Symbols after the map");
-/*	while (all->map[y])
-	{
-		x = -1;
-		if (ft_strlen(all->map[y]) != map_x)
-			shutdown(all, NULL, "Map is not rectangular");
-		while (all->map[y][++x])
-		{
-			if (map[y][x] == '1' || map[y][x] == '0')
-				continue ;
-			else if (ft_strchr("CEP", map[y][x]))
-				get_game_data(all->game, map[y][x], x, y);
-			else
-				shutdown(all, NULL, "Unknown symbol in the map");
-		}
-		y += 1;
-	}*/
 }
 
 void	parse_map(t_game *game, char **map)
@@ -136,12 +93,6 @@ void	parser(t_data *all)
 	all->map = ft_charmtrx_trim(all->map);
 	if (!all->map)
 		shutdown(all, NULL, strerror(errno));
-/*	int y = 0;
-	while (all->map[y])
-	{
-		printf("%d %s\n", y, all->map[y]);
-		y += 1;
-	}*/
 	parse_map(all->game, all->map);
 	if (check_game_data(all->game) < 0)
 	{

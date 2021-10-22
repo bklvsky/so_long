@@ -6,7 +6,7 @@
 #    By: dselmy <dselmy@student.21-school.ru>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/27 21:46:39 by dselmy            #+#    #+#              #
-#    Updated: 2021/10/20 22:52:35 by dselmy           ###   ########.fr        #
+#    Updated: 2021/10/22 19:30:54 by dselmy           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,13 +30,13 @@ FLAGS = -g -Wall -Werror -Wextra
 
 all: $(NAME)
 
-$(NAME): $(OBJ) $(INC_DIR)/so_long.h
+$(NAME): $(OBJ) $(INC_DIR)so_long.h
 		@make -C $(LIBFT_DIR)
 		@make -C $(MLX_DIR)
 		gcc -o $(NAME) $(FLAGS) -I$(INC_DIR) $(OBJ) $(LIBFT_DIR)libft.a $(MLX_DIR)libmlx_Linux.a\
 		$(MLX_FLAGS)
 		
-$(OBJ): %.o: %.c
+%.o:	%.c $(INC_DIR)so_long.h
 		gcc -c $(FLAGS) -I$(INC_DIR) $< -o $@
 
 clean:
