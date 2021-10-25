@@ -6,7 +6,7 @@
 /*   By: dselmy <dselmy@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 17:29:20 by dselmy            #+#    #+#             */
-/*   Updated: 2021/10/23 01:40:51 by dselmy           ###   ########.fr       */
+/*   Updated: 2021/10/25 02:38:44 by dselmy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void	my_pixel_put(t_img *img, int x, int y, int color)
 	dst = img->addr + (y * img->line_len + x * (img->bpp / 8));
 	*(unsigned int *)dst = color;
 }
+
+
 
 int	color_transparent(unsigned int trgb)
 {

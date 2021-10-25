@@ -6,7 +6,7 @@
 /*   By: dselmy <dselmy@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 18:08:09 by dselmy            #+#    #+#             */
-/*   Updated: 2021/10/22 22:20:34 by dselmy           ###   ########.fr       */
+/*   Updated: 2021/10/25 02:51:33 by dselmy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,33 @@
 void	free_struct(t_data *all)
 {
 	free(all->win->img);
-	free(all->win->texs);
 	free(all->win);
+	ft_free_charmtrx(all->game->map);
+	free(all->game->data);
+	free(all->game->enemy);
 	free(all->game);
-	ft_free_charmtrx(all->map);
 	free(all);
 }
 
-int		stop_game(t_data *all)
+void	clear_img_buf(void *mlx, t_img *img_buf, int size)
 {
 	int		i;
 
 	i = 0;
-	while (i <= 7 && all->win->texs[i].img)
+	while (i < size)
 	{
-		mlx_destroy_image(all->win->mlx, all->win->texs[i].img);
+		if (img_buf[i].img)
+			mlx_destroy_image(mlx, img_buf[i].img);
 		i += 1;
 	}
+}
+
+int		stop_game(t_data *all)
+{
+	clear_img_buf(all->win->mlx, all->win->env, 4);
+	clear_img_buf(all->win->mlx, all->win->enemy, ENEMY_ANIMATION);
+	clear_img_buf(all->win->mlx, all->win->cllct, CLLCT_ANIMATION);
+	clear_img_buf(all->win->mlx, all->win->plr, 4);
 	mlx_destroy_image(all->win->mlx, all->win->img->img);
 	mlx_destroy_window(all->win->mlx, all->win->win);
 	shutdown(all, NULL, NULL);

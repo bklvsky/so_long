@@ -6,7 +6,7 @@
 /*   By: dselmy <dselmy@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 00:03:01 by dselmy            #+#    #+#             */
-/*   Updated: 2021/10/22 22:13:45 by dselmy           ###   ########.fr       */
+/*   Updated: 2021/10/25 03:02:00 by dselmy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,34 @@
 # include <stdio.h>
 
 # define SCALE 40
+
+# define KEY_W 119
+# define KEY_S 115
+# define KEY_A 97
+# define KEY_D 100
+# define ESC 65307
+
+# define FLOOR 0
+# define WALL 1
+# define EXIT_OFF 2
+# define EXIT_ON 3
+
+# define DATA_CLLCT 0
+# define DATA_EXIT 1
+# define DATA_PLR 2
+
+# define PLR_UP 0
+# define PLR_DOWN 1
+# define PLR_LEFT 2
+# define PLR_RIGHT 3
+
+# ifdef SO_LONG_BONUS_H
+#  define ENEMY_ANIMATION 6
+#  define CLLCT_ANIMATION 3
+# else
+#  define ENEMY_ANIMATION 0
+#  define CLLCT_ANIMATION 1
+# endif
 
 typedef struct s_img
 {
@@ -38,46 +66,50 @@ typedef struct s_win
 	void		*mlx;
 	void		*win;
 	t_img		*img;
-	t_img		*texs;
+	t_img		env[4];
+	t_img		enemy[ENEMY_ANIMATION];
+	t_img		cllct[CLLCT_ANIMATION];
+	t_img		plr[4];
 	int			start_draw_x;
 	int			start_draw_y;
 	int			map_x;
 	int			map_y;
 	int			flag_screen_x;
 	int			flag_screen_y;
-/*	t_img		*floor_tex;
-	t_img		*wall_tex;
-	t_img		*cllct_img;
-	t_img		*plr_tex;
-	t_img		*exit_img;*/
 }				t_win;
 
-# define FLOOR 0
-# define WALL 1
-# define CLLCT 2
-# define EXIT 3
-# define PLR_UP 4
-# define PLR_DOWN 5
-# define PLR_LEFT 6
-# define PLR_RIGHT 7
+typedef struct s_enemy
+{
+	int			init;
+	int			pos_x;
+	int			pos_y;
+	int			dir_x;
+	int			dir_y;
+	int			state;
+}				t_enemy;
+
+typedef struct s_plr
+{
+	int			pos_x;
+	int			pos_y;
+	int			dir;
+}				t_plr;
 
 typedef struct s_game
 {
-//	char		**map;
-	int			plr;
-	int			exit;
-	int			cllct;
-	int			plr_x;
-	int			plr_y;
-	int			plr_dir;
+	char		**map;
+	int			*data;
+	t_plr		plr;
+	int			cllct_state;
+	t_enemy		*enemy;
+	int			enemy_num;
 	int			moves;
 }				t_game;
 
 typedef struct s_data
 {
-	t_win		*win;
 	int			map_fd;
-	char		**map;
+	t_win		*win;
 	t_game		*game;
 }				t_data;
 
@@ -85,29 +117,33 @@ int	init_struct(t_data **all);
 
 void    parser(t_data *all);
 
+void	check_arg(int argc, char **argv, t_data *all);
+
 void	skip_newlines(char **map, int *y);
 int		check_sym_map(char *line);
 int		check_closed_line(char *line);
 void	check_one_line(t_data *all, char *line, int map_x);
 void	get_game_data(t_game *game, int c, int x, int y);
+char	**read_conf(int fd);
 
-void	launch_game(t_data *all);
-void	render_game(char **map, t_game *game, t_win *win);
-void	put_map(t_win *win, char **map);
+void	render_game(t_game *game, t_win *win);
+void	put_map(t_win *win, t_game *game);
+void	put_player(t_win *win, t_plr plr);
+void	get_start_pos(t_win *win, t_plr plr);
 
 void	my_pixel_put(t_img *img, int x, int y, int color);
 void	put_square(t_img *img, t_img tex, int x, int y);
 
 int		handle_keys(int key, t_data *all);
-void	plr_right(char **map, t_game *game);
-void	plr_left(char **map, t_game *game);
-void	plr_down(char **map, t_game *game);
-void	plr_up(char **map, t_game *game);
-void	move_player(char **map, t_game *game);
+int		plr_right(t_game *game);
+int		plr_left(t_game *game);
+int		plr_down(t_game *game);
+int		plr_up(t_game *game);
+void	move_player(t_game *game);
 
 void	get_map_res(t_win *win, char **map);
 int		start_win(t_win *win);
-int		get_texture(t_win *win, t_img *tex_table);
+int		get_texture(t_win *win);
 int		get_tex_img(void *mlx, char *path, t_img *tex);
 void	get_win_res(t_win *win);
 //void	get_win_res(t_img *img, char **map);
@@ -118,7 +154,8 @@ void	free_struct(t_data *all);
 
 # define FLOOR_TEX_PATH "./textures_xpm/frog/floor_tex.xpm"
 # define WALL_TEX_PATH "./textures_xpm/frog/wall_tex.xpm"
-# define EXIT_TEX_PATH "./textures_xpm/frog/exit_open_tex.xpm"
+# define EXIT_ON_TEX_PATH "./textures_xpm/frog/exit_open_tex.xpm"
+# define EXIT_OFF_TEX_PATH "./textures_xpm/frog/exit_close_tex.xpm"
 # define CLLCT_TEX_PATH "./textures_xpm/frog/collect_sprite_tex.xpm"
 
 # define PLR_UP_PATH "./textures_xpm/frog/plr_up_tex.xpm"
