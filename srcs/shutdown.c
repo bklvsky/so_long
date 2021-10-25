@@ -6,7 +6,7 @@
 /*   By: dselmy <dselmy@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 18:08:09 by dselmy            #+#    #+#             */
-/*   Updated: 2021/10/25 02:51:33 by dselmy           ###   ########.fr       */
+/*   Updated: 2021/10/26 00:23:55 by dselmy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	free_struct(t_data *all)
 	free(all->game->data);
 	free(all->game->enemy);
 	free(all->game);
-	free(all);
+//	free(all);
 }
 
 void	clear_img_buf(void *mlx, t_img *img_buf, int size)

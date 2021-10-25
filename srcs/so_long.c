@@ -6,7 +6,7 @@
 /*   By: dselmy <dselmy@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 00:22:50 by dselmy            #+#    #+#             */
-/*   Updated: 2021/10/25 02:54:11 by dselmy           ###   ########.fr       */
+/*   Updated: 2021/10/26 00:32:05 by dselmy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 		separate functions that will change index of state
 		check for collisions with enemies in render game*/
 
+#ifndef BONUS
 
 void	render_game(t_game *game, t_win *win)
 {
@@ -52,3 +53,5 @@ int	main(int argc, char **argv)
 	mlx_loop(all->win->mlx);
 	return (0);
 }
+
+#endif

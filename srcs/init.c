@@ -6,7 +6,7 @@
 /*   By: dselmy <dselmy@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 00:12:12 by dselmy            #+#    #+#             */
-/*   Updated: 2021/10/25 03:11:34 by dselmy           ###   ########.fr       */
+/*   Updated: 2021/10/26 00:32:16 by dselmy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,12 @@ int	init_struct(t_data **all)
 		return (0);
 	(*all)->game->data = (int *)ft_calloc(3, sizeof(int));
 	(*all)->win->img = (t_img *)ft_calloc(1, sizeof(t_img));
-	if (!(*all)->game->data || !(*all)->win->img)
+	printf("in init struct ENEMY_ANIM = %d\n", ENEMY_ANIMATION);
+	(*all)->win->enemy = (t_img *)ft_calloc(ENEMY_ANIMATION, sizeof(t_img));
+	(*all)->win->cllct = (t_img *)ft_calloc(CLLCT_ANIMATION, sizeof(t_img));
+	if (!(*all)->game->data || !(*all)->win->img || !(*all)->win->cllct)
 		return (0);
-//	(*all)->win->texs = (t_img *)ft_calloc(8, sizeof(t_img));
+	if (!(*all)->win->enemy && ENEMY_ANIMATION)
+		return (0);
 	return (1);
 }

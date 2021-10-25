@@ -6,7 +6,7 @@
 /*   By: dselmy <dselmy@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 19:03:23 by dselmy            #+#    #+#             */
-/*   Updated: 2021/10/24 19:59:45 by dselmy           ###   ########.fr       */
+/*   Updated: 2021/10/26 02:32:40 by dselmy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,12 @@ void	check_one_line(t_data *all, char *line, int map_x)
 	int		i;
 
 	i = 0;
-	while (ft_strchr("10ECP", line[i]) && line[i])
+	while (ft_strchr(ALLOWED_SYM, line[i]) && line[i])
+	{
+		if (line[i] == 'H' || line[i] == 'V')
+			all->game->enemy_num += 1;
 		i += 1;
+	}
 	if (line[i] != '\0')
 		shutdown(all, NULL, "Unknown symbol in the map");
 	if (i != map_x)

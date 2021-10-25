@@ -6,7 +6,7 @@
 /*   By: dselmy <dselmy@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 00:42:52 by dselmy            #+#    #+#             */
-/*   Updated: 2021/10/24 19:56:23 by dselmy           ###   ########.fr       */
+/*   Updated: 2021/10/26 02:42:08 by dselmy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,17 @@ void	check_map(t_data *all, char **map)
 				shutdown(all, NULL, "The map is not closed");
 			break ;
 		}
-		check_one_line(all, map[y], map_x); //this function depends on bonus/base
+		check_one_line(all, map[y], map_x);
 	}
 	skip_newlines(map, &y);
 	if (map[y] != NULL)
 		shutdown(all, NULL, "Symbols after the map");
+}
+
+static void	clear_characters(char *c)
+{
+	if (*c == 'H' || *c == 'V' || *c == 'P')
+		*c = '0';
 }
 
 void	parse_map(t_game *game)
@@ -54,6 +60,7 @@ void	parse_map(t_game *game)
 			if (!game->map[y][x])
 				break ;
 			get_game_data(game, game->map[y][x], x, y);
+			clear_characters(&(game->map[y][x]));
 			x += 1;
 		}
 		y += 1;
@@ -81,7 +88,9 @@ void	parser(t_data *all)
 		shutdown(all, NULL, strerror(errno));
 	check_map(all, all->game->map);
 	all->game->map = ft_charmtrx_trim(all->game->map);
-	if (!all->game->map)
+	all->game->enemy = (t_enemy *)ft_calloc(all->game->enemy_num, \
+															sizeof(t_enemy));
+	if (!all->game->map || (!all->game->enemy && all->game->enemy_num))
 		shutdown(all, NULL, strerror(errno));
 	parse_map(all->game);
 	if (check_game_data(all->game->data) < 0)

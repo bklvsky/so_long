@@ -6,7 +6,7 @@
 /*   By: dselmy <dselmy@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 19:58:03 by dselmy            #+#    #+#             */
-/*   Updated: 2021/10/25 02:38:51 by dselmy           ###   ########.fr       */
+/*   Updated: 2021/10/26 02:33:07 by dselmy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,11 @@
 # define CLLCT_2_TEX_PATH "./textures_xpm/frog/collect_sprite_2_tex.xpm"
 # define CLLCT_3_TEX_PATH "./textures_xpm/frog/collect_sprite_3_tex.xpm"
 
+# define ANIM_SPEED 700
+# define EN_MOVES_FOR_SQUARE 2
+
 int	get_animation_tex(t_win *win);
+
+void    move_enemies(t_game *game);
 
 #endif

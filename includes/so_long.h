@@ -6,7 +6,7 @@
 /*   By: dselmy <dselmy@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 00:03:01 by dselmy            #+#    #+#             */
-/*   Updated: 2021/10/25 03:02:00 by dselmy           ###   ########.fr       */
+/*   Updated: 2021/10/26 02:39:52 by dselmy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,14 @@
 # define PLR_LEFT 2
 # define PLR_RIGHT 3
 
-# ifdef SO_LONG_BONUS_H
+# ifdef BONUS
 #  define ENEMY_ANIMATION 6
 #  define CLLCT_ANIMATION 3
+#  define ALLOWED_SYM "10ECPHV"
 # else
 #  define ENEMY_ANIMATION 0
 #  define CLLCT_ANIMATION 1
+#  define ALLOWED_SYM "10ECP"
 # endif
 
 typedef struct s_img
@@ -67,8 +69,8 @@ typedef struct s_win
 	void		*win;
 	t_img		*img;
 	t_img		env[4];
-	t_img		enemy[ENEMY_ANIMATION];
-	t_img		cllct[CLLCT_ANIMATION];
+	t_img		*enemy;
+	t_img		*cllct;
 	t_img		plr[4];
 	int			start_draw_x;
 	int			start_draw_y;
@@ -83,6 +85,8 @@ typedef struct s_enemy
 	int			init;
 	int			pos_x;
 	int			pos_y;
+	int			win_x;
+	int			win_y;
 	int			dir_x;
 	int			dir_y;
 	int			state;
@@ -100,6 +104,7 @@ typedef struct s_game
 	char		**map;
 	int			*data;
 	t_plr		plr;
+	int			anim_flag;
 	int			cllct_state;
 	t_enemy		*enemy;
 	int			enemy_num;

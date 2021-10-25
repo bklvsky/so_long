@@ -6,7 +6,7 @@
 #    By: dselmy <dselmy@student.21-school.ru>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/27 21:46:39 by dselmy            #+#    #+#              #
-#    Updated: 2021/10/25 23:20:32 by dselmy           ###   ########.fr        #
+#    Updated: 2021/10/26 02:48:27 by dselmy           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ SRCS_NO_COM =	$(SRCS_DIR)so_long.c
 SRCS_BONUS =	$(shell find $(SRCS_DIR_BONUS) -maxdepth 1 -name "*.c")
 
 MLX_FLAGS =		-lXext -lX11 -lm -lbsd
-CFLAGS =		-g -Wall -Werror -Wextra
+CFLAGS =		-Wall -Werror -Wextra
 BONUS_FLAGS =	-D BONUS=1
 
 ifdef WITH_BONUS
@@ -38,6 +38,7 @@ INC = $(INC_DIR)so_long.h
 endif
 
 OBJ = $(SRCS:.c=.o)
+OBJ_BONUS = $(SRCS_BONUS:.c=.o)
 
 all: $(NAME) $(INC)
 
@@ -52,7 +53,7 @@ $(NAME): $(OBJ) $(INC)
 
 clean:
 			@make clean -C $(LIBFT_DIR)
-			rm -f $(OBJ)
+			rm -f $(OBJ) $(OBJ_BONUS)
 
 fclean: clean
 			@make fclean -C $(LIBFT_DIR)
