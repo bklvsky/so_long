@@ -6,17 +6,14 @@
 /*   By: dselmy <dselmy@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 18:26:36 by dselmy            #+#    #+#             */
-/*   Updated: 2021/10/26 02:34:22 by dselmy           ###   ########.fr       */
+/*   Updated: 2021/10/27 03:05:21 by dselmy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long_bonus.h"
 
-//handle_keys is not common btw
-
 void	set_animation(t_game *game)
 {
-//	printf("game->anim_flag = %d\n", game->anim_flag);
 	game->anim_flag += 1;
 	if (game->anim_flag == ANIM_SPEED)
 	{
@@ -26,9 +23,13 @@ void	set_animation(t_game *game)
 	}
 }
 
-/*for now only in small win*/
-
-//void	put_enemy_img(t_win *win, t_)
+int		is_on_screen(t_win *win, t_enemy enemy)
+{
+	return (enemy.win_x > win->start_draw_x * SCALE && \
+	enemy.win_x < (win->start_draw_x * SCALE) + win->img->width && \
+	enemy.win_y > win->start_draw_y * SCALE && \
+	enemy.win_y < (win->start_draw_y * SCALE) + win->img->height);
+}
 
 void	put_enemies(t_win *win, t_game *game)
 {
@@ -38,12 +39,29 @@ void	put_enemies(t_win *win, t_game *game)
 	while (i < game->enemy_num)
 	{
 		if (game->enemy[i].pos_y == game->plr.pos_y && \
-									game->enemy[i].pos_x == game->plr.pos_y)
+									game->enemy[i].pos_x == game->plr.pos_x)
 			game->data[DATA_EXIT] = -1;
-		put_square(win->img, win->enemy[game->enemy[i].state], \
-					game->enemy[i].win_x, game->enemy[i].win_y);
+		if (is_on_screen(win, game->enemy[i]))
+			put_square(win->img, win->enemy[game->enemy[i].state], \
+			(game->enemy[i].win_x - win->start_draw_x * SCALE), \
+			game->enemy[i].win_y - win->start_draw_y * SCALE);
 		i += 1;
 	}
+}
+
+static int	print_moves(t_win *win, int moves)
+{
+	char	*str;
+	char	*str_num;
+
+	str_num = ft_itoa(moves);
+	str = ft_strjoin("MOVES  ", str_num);
+	if (!str_num || !str)
+		return (0);
+	mlx_string_put(win->mlx, win->win, 5, 20, 0, str);
+	free(str);
+	free(str_num);
+	return (1);
 }
 
 void	render_game(t_game *game, t_win *win)
@@ -53,11 +71,10 @@ void	render_game(t_game *game, t_win *win)
 	put_enemies(win, game);
 	put_player(win, game->plr);
 	mlx_put_image_to_window(win->mlx, win->win, win->img->img, 0, 0);
+	print_moves(win, game->moves);
 }
-
 int		render_all(t_data *all)
 {
-//	printf("in render all game->anim_flag = %d\n", all->game->anim_flag);
 	mlx_do_sync(all->win->mlx);
 	set_animation(all->game);
 	if (all->game->anim_flag == 0)
@@ -77,7 +94,6 @@ int     main(int argc, char **argv)
 {
 	t_data	*all;
 
-//	printf("ENEMY_ANIM = %d\n", ENEMY_ANIMATION);
 	if (!init_struct(&all))
 		exit (1);
 	check_arg(argc, argv, all);
@@ -87,7 +103,6 @@ int     main(int argc, char **argv)
 	render_game(all->game, all->win);
 	mlx_loop_hook(all->win->mlx, &render_all, all);
 	mlx_hook(all->win->win, 2, (1L<<0), &handle_keys, all);
-//	mlx_hook(all->win->win 3, (1L<<0), &)
 	mlx_hook(all->win->win, 17, (1L<<17), &stop_game, all);
 	mlx_loop(all->win->mlx);
 	return (0);

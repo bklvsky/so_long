@@ -6,14 +6,12 @@
 /*   By: dselmy <dselmy@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 17:58:38 by dselmy            #+#    #+#             */
-/*   Updated: 2021/10/24 22:01:35 by dselmy           ###   ########.fr       */
+/*   Updated: 2021/10/27 03:07:39 by dselmy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
-
-/*IN COMMON*/
 void	get_win_res(t_win *win)
 {
 	int		x_screen;
@@ -23,26 +21,18 @@ void	get_win_res(t_win *win)
 	if (win->map_x > x_screen)
 	{
 		win->flag_screen_x = 1;
-		win->img->width = x_screen;
+		win->img->width = x_screen - x_screen % SCALE;
 	}
 	else
 		win->img->width = win->map_x;
 	if (win->map_y > y_screen)
 	{
 		win->flag_screen_y = 1;
-		win->img->height = y_screen;
+		win->img->height = y_screen - y_screen % SCALE;
 	}
 	else
 		win->img->height = win->map_y;
 }
-
-/*get texture for plr, cllct (for base - only one; 3 textures - bonus),
- (enemy - bonus)
- 
- separate files for player - put player, init player
-
- cllct - first 
- */
 
 int	start_win(t_win *win)
 {

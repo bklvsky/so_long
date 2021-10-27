@@ -6,7 +6,7 @@
 /*   By: dselmy <dselmy@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/23 01:49:26 by dselmy            #+#    #+#             */
-/*   Updated: 2021/10/25 22:02:28 by dselmy           ###   ########.fr       */
+/*   Updated: 2021/10/27 03:08:31 by dselmy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,6 @@ char	*get_plr_path(int i)
 	else
 		return (PLR_RIGHT_PATH);
 }
-
-/*get cllct - only one here; others - in bonus "get animation"*/
 
 int	get_texture(t_win *win)
 {

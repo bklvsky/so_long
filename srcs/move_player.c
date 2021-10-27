@@ -6,13 +6,11 @@
 /*   By: dselmy <dselmy@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 01:57:19 by dselmy            #+#    #+#             */
-/*   Updated: 2021/10/25 03:27:14 by dselmy           ###   ########.fr       */
+/*   Updated: 2021/10/27 03:08:00 by dselmy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
-
-/*NOT IN COMMON*/
 
 void	move_player(t_game *game)
 {

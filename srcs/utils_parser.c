@@ -6,7 +6,7 @@
 /*   By: dselmy <dselmy@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 20:54:06 by dselmy            #+#    #+#             */
-/*   Updated: 2021/10/26 02:40:18 by dselmy           ###   ########.fr       */
+/*   Updated: 2021/10/27 03:08:19 by dselmy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,13 @@ static void	get_enemy(t_enemy *enemy, int c, int x, int y)
 	int		i;
 
 	i = 0;
-	printf("in get enemy posx = %d posy = %d\n", enemy[i].pos_x, enemy[i].pos_y);
 	while (enemy[i].init != 0)
 		i += 1;
 	if (c == 'H')
 		enemy[i].dir_x = 1;
-	else
+	else if (c == 'V')
 		enemy[i].dir_y = 1;
+	enemy[i].init = 1;
 	enemy[i].pos_x = x;
 	enemy[i].pos_y = y;
 	enemy[i].win_x = x * SCALE;
@@ -72,8 +72,6 @@ void	get_game_data(t_game *game, int c, int x, int y)
 	}
 	else if (c == 'H' || c == 'V')
 		get_enemy(game->enemy, c, x, y);
-	printf("after get enemy posx = %d posy = %d\n", game->enemy[0].pos_x, game->enemy[0].pos_y);
-	printf("after get enemy dirx = %d diry = %d\n", game->enemy[0].dir_x, game->enemy[0].dir_y);
 }
 
 char	**read_conf(int fd)

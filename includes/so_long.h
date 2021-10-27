@@ -6,7 +6,7 @@
 /*   By: dselmy <dselmy@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 00:03:01 by dselmy            #+#    #+#             */
-/*   Updated: 2021/10/26 02:39:52 by dselmy           ###   ########.fr       */
+/*   Updated: 2021/10/27 03:27:02 by dselmy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ typedef struct s_game
 	int			*data;
 	t_plr		plr;
 	int			anim_flag;
+	int			move_flag;
 	int			cllct_state;
 	t_enemy		*enemy;
 	int			enemy_num;
@@ -157,17 +158,26 @@ void	shutdown(t_data *all, char *err_ident, char *err_message);
 int		stop_game(t_data *all);
 void	free_struct(t_data *all);
 
-# define FLOOR_TEX_PATH "./textures_xpm/frog/floor_tex.xpm"
-# define WALL_TEX_PATH "./textures_xpm/frog/wall_tex.xpm"
-# define EXIT_ON_TEX_PATH "./textures_xpm/frog/exit_open_tex.xpm"
-# define EXIT_OFF_TEX_PATH "./textures_xpm/frog/exit_close_tex.xpm"
-# define CLLCT_TEX_PATH "./textures_xpm/frog/collect_sprite_tex.xpm"
+# define FLOOR_TEX_PATH "../textures_xpm/frog/floor_tex.xpm"
+# define WALL_TEX_PATH "../textures_xpm/frog/wall_tex.xpm"
+# define EXIT_ON_TEX_PATH "../textures_xpm/frog/exit_open_tex.xpm"
+# define EXIT_OFF_TEX_PATH "../textures_xpm/frog/exit_close_tex.xpm"
 
-# define PLR_UP_PATH "./textures_xpm/frog/plr_up_tex.xpm"
-# define PLR_DOWN_PATH "./textures_xpm/frog/plr_down_tex.xpm"
-# define PLR_LEFT_PATH "./textures_xpm/frog/plr_left_tex.xpm"
-# define PLR_RIGHT_PATH "./textures_xpm/frog/plr_right_tex.xpm"
+# define CLLCT_TEX_PATH "../textures_xpm/frog/collect_sprite_tex.xpm"
+# define CLLCT_2_TEX_PATH "../textures_xpm/frog/collect_sprite_2_tex.xpm"
+# define CLLCT_3_TEX_PATH "../textures_xpm/frog/collect_sprite_3_tex.xpm"
 
+# define PLR_UP_PATH "../textures_xpm/frog/plr_up_tex.xpm"
+# define PLR_DOWN_PATH "../textures_xpm/frog/plr_down_tex.xpm"
+# define PLR_LEFT_PATH "../textures_xpm/frog/plr_left_tex.xpm"
+# define PLR_RIGHT_PATH "../textures_xpm/frog/plr_right_tex.xpm"
+
+# define ENEMY_1_TEX_PATH "../textures_xpm/frog/enemy_1_tex.xpm"
+# define ENEMY_2_TEX_PATH "../textures_xpm/frog/enemy_2_tex.xpm"
+# define ENEMY_3_TEX_PATH "../textures_xpm/frog/enemy_3_tex.xpm"
+# define ENEMY_4_TEX_PATH "../textures_xpm/frog/enemy_4_tex.xpm"
+# define ENEMY_5_TEX_PATH "../textures_xpm/frog/enemy_5_tex.xpm"
+# define ENEMY_6_TEX_PATH "../textures_xpm/frog/enemy_6_tex.xpm"
 
 
 #endif

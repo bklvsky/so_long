@@ -6,7 +6,7 @@
 /*   By: dselmy <dselmy@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 19:59:04 by dselmy            #+#    #+#             */
-/*   Updated: 2021/10/26 02:36:13 by dselmy           ###   ########.fr       */
+/*   Updated: 2021/10/27 03:08:51 by dselmy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ static void	move_enemy(t_enemy *enemy, char **map)
 	{
 		enemy->dir_x *= -1;
 		enemy->dir_y *= -1;
+		return ;
 	}
 	enemy->win_x += enemy->dir_x * SCALE / EN_MOVES_FOR_SQUARE;
 	enemy->win_y += enemy->dir_y * SCALE / EN_MOVES_FOR_SQUARE;

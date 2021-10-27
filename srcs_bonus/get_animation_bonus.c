@@ -6,7 +6,7 @@
 /*   By: dselmy <dselmy@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 21:32:31 by dselmy            #+#    #+#             */
-/*   Updated: 2021/10/26 02:15:59 by dselmy           ###   ########.fr       */
+/*   Updated: 2021/10/27 03:06:06 by dselmy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ static int	get_enemy_tex(void *mlx, t_img *enemy)
 	i = 0;
 	while (i < ENEMY_ANIMATION)
 	{
-/*		enemy[i].img = get_tex(mlx, get_en_path(i), \
-								&enemy[i].width, &enemy[i].height);*/
 		if (!get_tex_img(mlx, get_en_path(i), &(enemy[i])))
 			return (-1);
 		i += 1;
@@ -59,8 +57,6 @@ static int	get_cllct_anim_tex(void *mlx, t_img *cllct)
 	i = 1;
 	while (i < CLLCT_ANIMATION)
 	{
-		printf("CLLCT ANIMA = %d\n", CLLCT_ANIMATION);
-		printf("in get_cllct i = %d\n", i);
 		if (!get_tex_img(mlx, get_cllct_path(i), &(cllct[i])))
 			return (-1);
 		i += 1;
