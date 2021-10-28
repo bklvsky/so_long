@@ -1,31 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long_bonus.h                                    :+:      :+:    :+:   */
+/*   clear_game_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dselmy <dselmy@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/24 19:58:03 by dselmy            #+#    #+#             */
-/*   Updated: 2021/10/28 17:52:46 by dselmy           ###   ########.fr       */
+/*   Created: 2021/10/28 17:37:14 by dselmy            #+#    #+#             */
+/*   Updated: 2021/10/28 17:55:29 by dselmy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SO_LONG_BONUS_H
-# define SO_LONG_BONUS_H
+#include "../includes/so_long_bonus.h"
 
-# include "./so_long.h"
-
-# define ANIM_SPEED 300
-# define ENEMY_ANIM_SPEED 1000
-# define EN_MOVES_FOR_SQUARE 2
-
-int		render_all(t_data *all);
-
-int		get_animation_tex(t_win *win);
-
-void	set_animation(t_game *game);
-
-int		print_moves(t_win *win, int moves);
-void	put_enemies(t_win *win, t_game *game);
-
-#endif
+void	clear_game(t_win *win)
+{
+	clear_img_buf(win->mlx, win->env, 4);
+	clear_img_buf(win->mlx, win->enemy, ENEMY_ANIMATION);
+	clear_img_buf(win->mlx, win->cllct, CLLCT_ANIMATION);
+	clear_img_buf(win->mlx, win->plr, 4);
+	if (win->img->img)
+		mlx_destroy_image(win->mlx, win->img->img);
+	if (win->win)
+		mlx_destroy_window(win->mlx, win->win);
+}

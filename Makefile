@@ -6,22 +6,25 @@
 #    By: dselmy <dselmy@student.21-school.ru>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/27 21:46:39 by dselmy            #+#    #+#              #
-#    Updated: 2021/10/28 01:57:02 by dselmy           ###   ########.fr        #
+#    Updated: 2021/10/28 17:54:52 by dselmy           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 EXEC_NAME =			so_long
 
+BONUS_DIR =			./solong_bonus/
+NO_BONUS_DIR =		./solong/
 SRCS_DIR =			./srcs/
 SRCS_DIR_BONUS =	./srcs_bonus/
 INC_DIR =			./includes/
 MLX_DIR =			./minilibx-linux/
 LIBFT_DIR =			./libft/
-BONUS_DIR =			./solong_bonus/
-NO_BONUS_DIR =		./solong/
 
 SRCS_NO_COM =	$(SRCS_DIR)main.c \
-				$(SRCS_DIR)render_frame.c
+				$(SRCS_DIR)render_frame.c \
+				$(SRCS_DIR)check_one_line.c \
+				$(SRCS_DIR)clear_game.c \
+				$(SRCS_DIR)init.c
 
 SRCS_COM = 		$(filter-out $(SRCS_NO_COM), \
 				$(shell find $(SRCS_DIR) -maxdepth 1 -name "*.c"))
@@ -59,6 +62,7 @@ $(NAME): $(OBJ) $(INC)
 		@make -C $(MLX_DIR)
 		gcc -o $(NAME) $(FLAGS) -I$(INC_DIR) $(OBJ) $(LIBFT_DIR)libft.a \
 		$(MLX_DIR)libmlx_Linux.a $(MLX_FLAGS)
+		cp $(NAME) ./
 		
 %.o:	%.c $(INC)
 		gcc -c $(FLAGS) -I$(INC_DIR) $< -o $@
@@ -70,7 +74,7 @@ clean:
 
 fclean: clean
 		@make fclean -C $(LIBFT_DIR)
-		rm -rf $(BONUS_DIR) $(NO_BONUS_DIR)
+		rm -rf $(BONUS_DIR) $(NO_BONUS_DIR) $(EXEC_NAME)
 		
 re: fclean all
 
