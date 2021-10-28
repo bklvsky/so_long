@@ -6,21 +6,26 @@
 #    By: dselmy <dselmy@student.21-school.ru>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/27 21:46:39 by dselmy            #+#    #+#              #
-#    Updated: 2021/10/27 03:34:48 by dselmy           ###   ########.fr        #
+#    Updated: 2021/10/28 01:57:02 by dselmy           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+EXEC_NAME =			so_long
 
 SRCS_DIR =			./srcs/
 SRCS_DIR_BONUS =	./srcs_bonus/
 INC_DIR =			./includes/
 MLX_DIR =			./minilibx-linux/
 LIBFT_DIR =			./libft/
-BONUS_DIR =			./so_long_bonus/
-NO_BONUS_DIR =		./so_long/
+BONUS_DIR =			./solong_bonus/
+NO_BONUS_DIR =		./solong/
+
+SRCS_NO_COM =	$(SRCS_DIR)main.c \
+				$(SRCS_DIR)render_frame.c
 
 SRCS_COM = 		$(filter-out $(SRCS_NO_COM), \
 				$(shell find $(SRCS_DIR) -maxdepth 1 -name "*.c"))
-SRCS_NO_COM =	$(SRCS_DIR)so_long.c
+				
 SRCS_BONUS =	$(shell find $(SRCS_DIR_BONUS) -maxdepth 1 -name "*.c")
 
 MLX_FLAGS =		-lXext -lX11 -lm -lbsd
@@ -39,7 +44,7 @@ INC = $(INC_DIR)so_long.h
 NAME_DIR = $(NO_BONUS_DIR)
 endif
 
-NAME =	$(NAME_DIR)so_long
+NAME =	$(NAME_DIR)$(EXEC_NAME)
 
 OBJ = $(SRCS:.c=.o)
 OBJ_BONUS = $(SRCS_BONUS:.c=.o)

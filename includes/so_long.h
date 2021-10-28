@@ -6,7 +6,7 @@
 /*   By: dselmy <dselmy@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 00:03:01 by dselmy            #+#    #+#             */
-/*   Updated: 2021/10/27 03:27:02 by dselmy           ###   ########.fr       */
+/*   Updated: 2021/10/28 05:24:47 by dselmy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,28 @@
 # include <string.h>
 # include <stdio.h>
 
-# define SCALE 40
+# define SCALE 64
+
+# define FLOOR_TEX_PATH "./textures_xpm/meme/floor_tex.xpm"
+# define WALL_TEX_PATH "./textures_xpm/meme/wall_tex.xpm"
+# define EXIT_ON_TEX_PATH "./textures_xpm/meme/exit_open_tex.xpm"
+# define EXIT_OFF_TEX_PATH "./textures_xpm/meme/exit_close_tex.xpm"
+
+# define CLLCT_TEX_PATH "./textures_xpm/meme/collect_sprite_tex.xpm"
+# define CLLCT_2_TEX_PATH "./textures_xpm/meme/collect_sprite_2_tex.xpm"
+# define CLLCT_3_TEX_PATH "./textures_xpm/meme/collect_sprite_3_tex.xpm"
+
+# define PLR_UP_PATH "./textures_xpm/meme/plr_up_tex.xpm"
+# define PLR_DOWN_PATH "./textures_xpm/meme/plr_down_tex.xpm"
+# define PLR_LEFT_PATH "./textures_xpm/meme/plr_left_tex.xpm"
+# define PLR_RIGHT_PATH "./textures_xpm/meme/plr_right_tex.xpm"
+
+# define ENEMY_1_TEX_PATH "./textures_xpm/meme/enemy_1_tex.xpm"
+# define ENEMY_2_TEX_PATH "./textures_xpm/meme/enemy_2_tex.xpm"
+# define ENEMY_3_TEX_PATH "./textures_xpm/meme/enemy_3_tex.xpm"
+# define ENEMY_4_TEX_PATH "./textures_xpm/meme/enemy_4_tex.xpm"
+# define ENEMY_5_TEX_PATH "./textures_xpm/meme/enemy_5_tex.xpm"
+# define ENEMY_6_TEX_PATH "./textures_xpm/meme/enemy_6_tex.xpm"
 
 # define KEY_W 119
 # define KEY_S 115
@@ -119,20 +140,22 @@ typedef struct s_data
 	t_game		*game;
 }				t_data;
 
-int	init_struct(t_data **all);
+int		init_struct(t_data **all);
 
-void    parser(t_data *all);
+void	parser(t_data *all);
 
 void	check_arg(int argc, char **argv, t_data *all);
+
+void	check_map(t_data *all, char **map);
+void	parse_map(t_game *game);
 
 void	skip_newlines(char **map, int *y);
 int		check_sym_map(char *line);
 int		check_closed_line(char *line);
-void	check_one_line(t_data *all, char *line, int map_x);
 void	get_game_data(t_game *game, int c, int x, int y);
-char	**read_conf(int fd);
 
-void	render_game(t_game *game, t_win *win);
+int		render_frame(t_game *game, t_win *win);
+
 void	put_map(t_win *win, t_game *game);
 void	put_player(t_win *win, t_plr plr);
 void	get_start_pos(t_win *win, t_plr plr);
@@ -148,36 +171,13 @@ int		plr_up(t_game *game);
 void	move_player(t_game *game);
 
 void	get_map_res(t_win *win, char **map);
-int		start_win(t_win *win);
+int		start_mlx(t_win *win);
 int		get_texture(t_win *win);
 int		get_tex_img(void *mlx, char *path, t_img *tex);
-void	get_win_res(t_win *win);
-//void	get_win_res(t_img *img, char **map);
 
-void	shutdown(t_data *all, char *err_ident, char *err_message);
-int		stop_game(t_data *all);
+void	err_shutdown(t_data *all, char *err_ident, char *err_message);
+int		shutdown(t_data *all);
+void	clear_game(t_win *win);
 void	free_struct(t_data *all);
-
-# define FLOOR_TEX_PATH "../textures_xpm/frog/floor_tex.xpm"
-# define WALL_TEX_PATH "../textures_xpm/frog/wall_tex.xpm"
-# define EXIT_ON_TEX_PATH "../textures_xpm/frog/exit_open_tex.xpm"
-# define EXIT_OFF_TEX_PATH "../textures_xpm/frog/exit_close_tex.xpm"
-
-# define CLLCT_TEX_PATH "../textures_xpm/frog/collect_sprite_tex.xpm"
-# define CLLCT_2_TEX_PATH "../textures_xpm/frog/collect_sprite_2_tex.xpm"
-# define CLLCT_3_TEX_PATH "../textures_xpm/frog/collect_sprite_3_tex.xpm"
-
-# define PLR_UP_PATH "../textures_xpm/frog/plr_up_tex.xpm"
-# define PLR_DOWN_PATH "../textures_xpm/frog/plr_down_tex.xpm"
-# define PLR_LEFT_PATH "../textures_xpm/frog/plr_left_tex.xpm"
-# define PLR_RIGHT_PATH "../textures_xpm/frog/plr_right_tex.xpm"
-
-# define ENEMY_1_TEX_PATH "../textures_xpm/frog/enemy_1_tex.xpm"
-# define ENEMY_2_TEX_PATH "../textures_xpm/frog/enemy_2_tex.xpm"
-# define ENEMY_3_TEX_PATH "../textures_xpm/frog/enemy_3_tex.xpm"
-# define ENEMY_4_TEX_PATH "../textures_xpm/frog/enemy_4_tex.xpm"
-# define ENEMY_5_TEX_PATH "../textures_xpm/frog/enemy_5_tex.xpm"
-# define ENEMY_6_TEX_PATH "../textures_xpm/frog/enemy_6_tex.xpm"
-
 
 #endif

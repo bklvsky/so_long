@@ -1,32 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_one_line.c                                   :+:      :+:    :+:   */
+/*   render_frame.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dselmy <dselmy@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/24 19:03:23 by dselmy            #+#    #+#             */
-/*   Updated: 2021/10/26 02:32:40 by dselmy           ###   ########.fr       */
+/*   Created: 2021/10/27 21:13:01 by dselmy            #+#    #+#             */
+/*   Updated: 2021/10/28 05:38:44 by dselmy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
-void	check_one_line(t_data *all, char *line, int map_x)
+int	render_frame(t_game *game, t_win *win)
 {
-	int		i;
-
-	i = 0;
-	while (ft_strchr(ALLOWED_SYM, line[i]) && line[i])
+	mlx_do_sync(win->mlx);
+	get_start_pos(win, game->plr);
+	put_map(win, game);
+	put_player(win, game->plr);
+	if (game->move_flag)
 	{
-		if (line[i] == 'H' || line[i] == 'V')
-			all->game->enemy_num += 1;
-		i += 1;
+		game->move_flag = 0;
+		printf("MOVES: %d\n", game->moves);
 	}
-	if (line[i] != '\0')
-		shutdown(all, NULL, "Unknown symbol in the map");
-	if (i != map_x)
-		shutdown(all, NULL, "The map is not rectangular");
-	if (line[0] != '1' || line[i - 1] != '1')
-		shutdown(all, NULL, "The map is not closed");
+	mlx_put_image_to_window(win->mlx, win->win, win->img->img, 0, 0);
+	if (game->data[DATA_EXIT] == 0)
+		printf("CONGRATULATIONS, \
+YOU WON WITH THE FINAL SCORE OF %d MOVES\n", game->moves);
+	return (0);
 }

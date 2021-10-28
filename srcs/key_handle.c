@@ -6,7 +6,7 @@
 /*   By: dselmy <dselmy@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 17:32:39 by dselmy            #+#    #+#             */
-/*   Updated: 2021/10/27 02:46:03 by dselmy           ###   ########.fr       */
+/*   Updated: 2021/10/28 02:33:55 by dselmy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ int	handle_keys(int key, t_data *all)
 	else if (key == KEY_D)
 		res = plr_right(all->game);
 	else if (key == ESC)
-		stop_game(all);
+		shutdown(all);
 	else
 		return (0);
 	if (res)
 		all->game->move_flag = 1;
-	render_game(all->game, all->win);
+	render_frame(all->game, all->win);
 	if (all->game->data[DATA_EXIT] <= 0)
-		stop_game(all);
+		shutdown(all);
 	return (0);
 }

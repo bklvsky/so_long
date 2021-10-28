@@ -1,33 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.c                                          :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dselmy <dselmy@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 00:22:50 by dselmy            #+#    #+#             */
-/*   Updated: 2021/10/27 03:07:28 by dselmy           ###   ########.fr       */
+/*   Updated: 2021/10/28 01:20:03 by dselmy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
-
-void	render_game(t_game *game, t_win *win)
-{
-	mlx_do_sync(win->mlx);
-	get_start_pos(win, game->plr);
-	put_map(win, game);
-	put_player(win, game->plr);
-	if (game->move_flag)
-	{
-		game->move_flag = 0;
-		printf("MOVES: %d\n", game->moves);
-	}
-	mlx_put_image_to_window(win->mlx, win->win, win->img->img, 0, 0);
-	if (game->data[DATA_EXIT] == 0)
-		printf("CONGRATULATIONS, \
-		YOU WON WITH THE FINAL SCORE OF %d MOVES\n", game->moves);
-}
 
 int	main(int argc, char **argv)
 {
@@ -37,11 +20,11 @@ int	main(int argc, char **argv)
 		exit (1);
 	check_arg(argc, argv, all);
 	parser(all);
-	if (!start_win(all->win))
-		shutdown(all, "MiniLibX error", strerror(errno));
-	render_game(all->game, all->win);
+	if (!start_mlx(all->win))
+		err_shutdown(all, "MiniLibX error", strerror(errno));
+	render_frame(all->game, all->win);
 	mlx_key_hook(all->win->win, &handle_keys, all);
-	mlx_hook(all->win->win, 17, (1L<<17), &stop_game, all);
+	mlx_hook(all->win->win, 17, (1L << 17), &shutdown, all);
 	mlx_loop(all->win->mlx);
 	return (0);
 }

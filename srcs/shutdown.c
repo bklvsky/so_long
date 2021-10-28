@@ -6,7 +6,7 @@
 /*   By: dselmy <dselmy@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 18:08:09 by dselmy            #+#    #+#             */
-/*   Updated: 2021/10/27 03:09:50 by dselmy           ###   ########.fr       */
+/*   Updated: 2021/10/28 01:20:22 by dselmy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	free_struct(t_data *all)
 	free(all);
 }
 
-void	clear_img_buf(void *mlx, t_img *img_buf, int size)
+static void	clear_img_buf(void *mlx, t_img *img_buf, int size)
 {
 	int		i;
 
@@ -38,30 +38,22 @@ void	clear_img_buf(void *mlx, t_img *img_buf, int size)
 	}
 }
 
-int		stop_game(t_data *all)
+void	clear_game(t_win *win)
 {
-	clear_img_buf(all->win->mlx, all->win->env, 4);
-	clear_img_buf(all->win->mlx, all->win->enemy, ENEMY_ANIMATION);
-	clear_img_buf(all->win->mlx, all->win->cllct, CLLCT_ANIMATION);
-	clear_img_buf(all->win->mlx, all->win->plr, 4);
-	mlx_destroy_image(all->win->mlx, all->win->img->img);
-	mlx_destroy_window(all->win->mlx, all->win->win);
-	shutdown(all, NULL, NULL);
-	return (0);
+	clear_img_buf(win->mlx, win->env, 4);
+	clear_img_buf(win->mlx, win->enemy, ENEMY_ANIMATION);
+	clear_img_buf(win->mlx, win->cllct, CLLCT_ANIMATION);
+	clear_img_buf(win->mlx, win->plr, 4);
+	if (win->img->img)
+		mlx_destroy_image(win->mlx, win->img->img);
+	if (win->win)
+		mlx_destroy_window(win->mlx, win->win);
 }
 
-void	shutdown(t_data *all, char *err_ident, char *err_message)
+int	shutdown(t_data *all)
 {
-	if (err_message)
-	{
-		ft_putendl_fd("Error", 2);
-		if (err_ident)
-			{
-				ft_putstr_fd(err_ident, 2);
-				ft_putstr_fd(": ", 2);
-			}
-		ft_putendl_fd(err_message, 2);
-	}
+	clear_game(all->win);
 	free_struct(all);
 	exit(0);
+	return (0);
 }

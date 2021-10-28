@@ -6,7 +6,7 @@
 /*   By: dselmy <dselmy@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 02:32:36 by dselmy            #+#    #+#             */
-/*   Updated: 2021/10/25 02:33:20 by dselmy           ###   ########.fr       */
+/*   Updated: 2021/10/27 22:49:44 by dselmy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,17 @@ int	plr_right(t_game *game)
 	game->plr.dir = PLR_RIGHT;
 	move_player(game);
 	return (1);
+}
+
+void	move_player(t_game *game)
+{
+	game->moves += 1;
+	if (game->map[game->plr.pos_y][game->plr.pos_x] == 'C')
+	{
+		game->map[game->plr.pos_y][game->plr.pos_x] = '0';
+		game->data[DATA_CLLCT] -= 1;
+	}
+	else if (game->map[game->plr.pos_y][game->plr.pos_x] == 'E' && \
+												game->data[DATA_CLLCT] == 0)
+		game->data[DATA_EXIT] = 0;
 }

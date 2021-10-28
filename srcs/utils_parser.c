@@ -6,7 +6,7 @@
 /*   By: dselmy <dselmy@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 20:54:06 by dselmy            #+#    #+#             */
-/*   Updated: 2021/10/27 03:08:19 by dselmy           ###   ########.fr       */
+/*   Updated: 2021/10/28 01:22:28 by dselmy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	skip_newlines(char **map, int *y)
 	}
 }
 
-int		check_closed_line(char *line)
+int	check_closed_line(char *line)
 {
 	int		i;
 
@@ -72,28 +72,4 @@ void	get_game_data(t_game *game, int c, int x, int y)
 	}
 	else if (c == 'H' || c == 'V')
 		get_enemy(game->enemy, c, x, y);
-}
-
-char	**read_conf(int fd)
-{
-	char	**map;
-	int		gnl_flag;
-	int		y;
-
-	y = 0;
-	map = (char **)ft_calloc(2, sizeof(char *));
-	gnl_flag = get_next_line(fd, map);
-	while (gnl_flag)
-	{
-		if (gnl_flag == -1)
-		{
-			ft_free_charmtrx(map);
-			return (NULL);
-		}
-		y += 1;
-		map = ft_realloc_charmtrx(map, y + 1);
-		gnl_flag = get_next_line(fd, &map[y]);
-	}
-	close(fd);
-	return (map);
 }

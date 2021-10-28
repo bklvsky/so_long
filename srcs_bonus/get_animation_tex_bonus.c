@@ -6,7 +6,7 @@
 /*   By: dselmy <dselmy@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 21:32:31 by dselmy            #+#    #+#             */
-/*   Updated: 2021/10/27 03:06:06 by dselmy           ###   ########.fr       */
+/*   Updated: 2021/10/27 21:17:05 by dselmy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static char	*get_en_path(int i)
 static int	get_enemy_tex(void *mlx, t_img *enemy)
 {
 	int		i;
-	
+
 	i = 0;
 	while (i < ENEMY_ANIMATION)
 	{

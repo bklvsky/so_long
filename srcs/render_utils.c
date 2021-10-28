@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   start_game.c                                       :+:      :+:    :+:   */
+/*   render_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dselmy <dselmy@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 22:41:23 by dselmy            #+#    #+#             */
-/*   Updated: 2021/10/27 01:10:41 by dselmy           ###   ########.fr       */
+/*   Updated: 2021/10/27 23:01:55 by dselmy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	put_map(t_win *win, t_game *game)
 			if (game->map[y + win->start_draw_y][x + win->start_draw_x] == 'C')
 				put_square(win->img, win->cllct[game->cllct_state], \
 														x * SCALE, y * SCALE);
-			else if (game->map[y + win->start_draw_y]\
+			else if (game->map[y + win->start_draw_y] \
 												[x + win->start_draw_x] == 'E')
 				put_exit(win, game, x * SCALE, y * SCALE);
 		}

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_img.c                                        :+:      :+:    :+:   */
+/*   get_texture.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dselmy <dselmy@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/23 01:49:26 by dselmy            #+#    #+#             */
-/*   Updated: 2021/10/27 03:08:31 by dselmy           ###   ########.fr       */
+/*   Updated: 2021/10/28 05:37:15 by dselmy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	get_tex_img(void *mlx, char *path, t_img *tex)
 	return (1);
 }
 
-char	*get_env_path(int i)
+static char	*get_env_path(int i)
 {
 	if (i == FLOOR)
 		return (FLOOR_TEX_PATH);
@@ -36,7 +36,7 @@ char	*get_env_path(int i)
 		return (EXIT_ON_TEX_PATH);
 }
 
-char	*get_plr_path(int i)
+static char	*get_plr_path(int i)
 {
 	if (i == PLR_UP)
 		return (PLR_UP_PATH);

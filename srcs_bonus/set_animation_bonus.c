@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   animation_bonus.c                                  :+:      :+:    :+:   */
+/*   set_animation_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dselmy <dselmy@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 19:59:04 by dselmy            #+#    #+#             */
-/*   Updated: 2021/10/27 03:08:51 by dselmy           ###   ########.fr       */
+/*   Updated: 2021/10/27 21:45:29 by dselmy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static void	move_enemy(t_enemy *enemy, char **map)
 {
+	enemy->state = (enemy->state + 1) % ENEMY_ANIMATION;
 	if (map[enemy->pos_y + enemy->dir_y][enemy->pos_x + enemy->dir_x] != '0')
 	{
 		enemy->dir_x *= -1;
@@ -22,7 +23,6 @@ static void	move_enemy(t_enemy *enemy, char **map)
 	}
 	enemy->win_x += enemy->dir_x * SCALE / EN_MOVES_FOR_SQUARE;
 	enemy->win_y += enemy->dir_y * SCALE / EN_MOVES_FOR_SQUARE;
-	enemy->state = (enemy->state + 1) % ENEMY_ANIMATION;
 	if (enemy->win_x % SCALE == 0 && enemy->win_y % SCALE == 0)
 	{
 		enemy->pos_x += enemy->dir_x;
@@ -30,7 +30,7 @@ static void	move_enemy(t_enemy *enemy, char **map)
 	}
 }
 
-void	move_enemies(t_game *game)
+static void	move_enemies(t_game *game)
 {
 	int		i;
 
@@ -40,10 +40,18 @@ void	move_enemies(t_game *game)
 		move_enemy(&(game->enemy[i]), game->map);
 		if (game->enemy[i].pos_x == game->plr.pos_x && \
 									game->enemy[i].pos_y == game->plr.pos_y)
-		{
-			printf("fuck you\n");
 			game->data[DATA_EXIT] = -1;
-		}
 		i += 1;
+	}
+}
+
+void	set_animation(t_game *game)
+{
+	game->anim_flag += 1;
+	if (game->anim_flag == ANIM_SPEED)
+	{
+		game->anim_flag = 0;
+		game->cllct_state = (game->cllct_state + 1) % CLLCT_ANIMATION;
+		move_enemies(game);
 	}
 }

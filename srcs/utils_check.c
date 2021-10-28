@@ -6,7 +6,7 @@
 /*   By: dselmy <dselmy@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 17:54:18 by dselmy            #+#    #+#             */
-/*   Updated: 2021/10/24 18:32:18 by dselmy           ###   ########.fr       */
+/*   Updated: 2021/10/27 23:34:32 by dselmy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ static int	check_file_format(char *file_name, char *format)
 void	check_arg(int argc, char **argv, t_data *all)
 {
 	if (argc != 2)
-		shutdown(all, NULL, "Usage: ./so_long file_name\n");
+		err_shutdown(all, NULL, "Usage: ./so_long file_name\n");
 	if (!(check_file_format(argv[1], ".ber")))
-		shutdown(all, NULL, "The map in *.ber format is required\n");
+		err_shutdown(all, NULL, "The map in *.ber format is required\n");
 	all->map_fd = open(argv[1], O_RDONLY);
 	if (all->map_fd < 0)
-		shutdown(all, argv[1], strerror(errno));
+		err_shutdown(all, argv[1], strerror(errno));
 }
