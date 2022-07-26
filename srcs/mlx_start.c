@@ -6,7 +6,7 @@
 /*   By: dselmy <dselmy@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 17:58:38 by dselmy            #+#    #+#             */
-/*   Updated: 2021/10/27 23:04:31 by dselmy           ###   ########.fr       */
+/*   Updated: 2021/11/05 23:25:25 by dselmy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	start_mlx(t_win *win)
 	if (!win->img->addr || get_texture(win) < 0)
 		return (-1);
 	win->win = mlx_new_window(win->mlx, win->img->width, \
-											win->img->height, "So_long");
+											win->img->height, "so_long");
 	if (!win->win)
 		return (-1);
 	return (1);

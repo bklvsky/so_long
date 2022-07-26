@@ -1,33 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_realloc_charmtrx.c                              :+:      :+:    :+:   */
+/*   ft_lstdouble_delone.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dselmy <dselmy@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/07 19:00:00 by dselmy            #+#    #+#             */
-/*   Updated: 2022/01/04 01:25:31 by dselmy           ###   ########.fr       */
+/*   Created: 2022/02/01 19:59:55 by dselmy            #+#    #+#             */
+/*   Updated: 2022/02/01 20:00:15 by dselmy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	**ft_realloc_charmtrx(char **arr, size_t size)
+void	ft_lstdouble_delone(t_lst_d *lst, void (*del)(void *))
 {
-	char		**new;
-	size_t		y;
-
-	new = (char **)ft_calloc(size + 1, sizeof(char *));
-	if (!new)
-		return (NULL);
-	if (!arr)
-		return (new);
-	y = 0;
-	while (arr[y] && y < size)
+	if (lst && del)
 	{
-		new[y] = arr[y];
-		y += 1;
+		del(lst->content);
+		free(lst);
 	}
-	free(arr);
-	return (new);
 }

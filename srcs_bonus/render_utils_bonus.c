@@ -6,7 +6,7 @@
 /*   By: dselmy <dselmy@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 21:39:23 by dselmy            #+#    #+#             */
-/*   Updated: 2021/10/28 02:37:29 by dselmy           ###   ########.fr       */
+/*   Updated: 2021/11/03 16:21:16 by dselmy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 static int	is_on_screen(t_win *win, t_enemy enemy)
 {
-	return (enemy.win_x > win->start_draw_x * SCALE && \
-	enemy.win_x < (win->start_draw_x * SCALE) + win->img->width && \
-	enemy.win_y > win->start_draw_y * SCALE && \
-	enemy.win_y < (win->start_draw_y * SCALE) + win->img->height);
+	return (enemy.win_x >= win->start_draw_x * SCALE && \
+	enemy.win_x <= (win->start_draw_x * SCALE) + win->img->width && \
+	enemy.win_y >= win->start_draw_y * SCALE && \
+	enemy.win_y <= (win->start_draw_y * SCALE) + win->img->height);
 }
 
 void	put_enemies(t_win *win, t_game *game)
@@ -40,15 +40,13 @@ void	put_enemies(t_win *win, t_game *game)
 
 int	print_moves(t_win *win, int moves)
 {
-	char	*str;
-	char	*str_num;
+	char	*str_n;
 
-	str_num = ft_itoa(moves);
-	str = ft_strjoin("MOVES  ", str_num);
-	if (!str_num || !str)
+	str_n = ft_itoa(moves);
+	if (!str_n)
 		return (0);
-	mlx_string_put(win->mlx, win->win, 6, SCALE / 2, 0, str);
-	free(str);
-	free(str_num);
+	mlx_string_put(win->mlx, win->win, SCALE / 6, SCALE / 2, 0, "MOVES:");
+	mlx_string_put(win->mlx, win->win, SCALE + SCALE / 4, SCALE / 2, 0, str_n);
+	free(str_n);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: dselmy <dselmy@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/02 21:23:05 by dselmy            #+#    #+#             */
-/*   Updated: 2021/10/07 21:10:30 by dselmy           ###   ########.fr       */
+/*   Updated: 2022/02/01 20:02:23 by dselmy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,13 @@ typedef struct s_list
 	void			*content;
 	struct s_list	*next;
 }					t_list;
+
+typedef struct s_lst_d
+{
+	void			*content;
+	struct s_lst_d	*prev;
+	struct s_lst_d	*next;
+}					t_lst_d;
 
 void				*ft_memset(void *dest, int c, size_t n);
 
@@ -109,6 +116,20 @@ void				ft_lstiter(t_list *lst, void (*f)(void *));
 t_list				*ft_lstmap(t_list *lst, void *(*f)(void *), \
 					void (*del)(void*));
 
+t_lst_d				*ft_lstdouble_new(void *elem);
+
+t_lst_d				*ft_lstdouble_last(t_lst_d *lst);
+
+void				ft_lstdouble_delone(t_lst_d *lst, void (*del)(void *));
+
+void				ft_lstdouble_clear(t_lst_d **lst, void (*del)(void *));
+
+int					ft_lstdouble_size(t_lst_d *lst);
+
+void				ft_lstdouble_add_front(t_lst_d **head, t_lst_d *new);
+
+void				ft_lstdouble_add_back(t_lst_d **head, t_lst_d *new);
+
 int					get_next_line(int fd, char **line);
 
 size_t				ft_charmtrx_len(char **mtrx);
@@ -117,9 +138,15 @@ char				**ft_sub_charmtrx(char **src, int start, int len);
 
 char				**ft_charmtrx_trim(char **mtrx);
 
-char				**ft_realloc_charmtrx(char **arr, unsigned size);
+char				**ft_realloc_charmtrx(char **arr, size_t size);
 
 void				ft_free_charmtrx(char **mtrx);
+
+void				ft_quicksort(int *array, int left, int right);
+
+char				**ft_charmtrx_dup(char **src);
+
+char				*ft_strrealloc(char *old, size_t new_size);
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 20

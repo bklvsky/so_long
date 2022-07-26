@@ -6,7 +6,7 @@
 /*   By: dselmy <dselmy@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 21:13:01 by dselmy            #+#    #+#             */
-/*   Updated: 2021/10/28 05:38:44 by dselmy           ###   ########.fr       */
+/*   Updated: 2021/11/05 23:53:45 by dselmy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,7 @@ int	render_frame(t_game *game, t_win *win)
 	get_start_pos(win, game->plr);
 	put_map(win, game);
 	put_player(win, game->plr);
-	if (game->move_flag)
-	{
-		game->move_flag = 0;
-		printf("MOVES: %d\n", game->moves);
-	}
+	printf("MOVES: %d\n", game->moves);
 	mlx_put_image_to_window(win->mlx, win->win, win->img->img, 0, 0);
 	if (game->data[DATA_EXIT] == 0)
 		printf("CONGRATULATIONS, \

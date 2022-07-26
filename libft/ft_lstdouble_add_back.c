@@ -1,33 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_realloc_charmtrx.c                              :+:      :+:    :+:   */
+/*   ft_lstdouble_add_back.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dselmy <dselmy@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/07 19:00:00 by dselmy            #+#    #+#             */
-/*   Updated: 2022/01/04 01:25:31 by dselmy           ###   ########.fr       */
+/*   Created: 2022/02/01 19:56:37 by dselmy            #+#    #+#             */
+/*   Updated: 2022/02/01 19:56:56 by dselmy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	**ft_realloc_charmtrx(char **arr, size_t size)
+void	ft_lstdouble_add_back(t_lst_d **head, t_lst_d *new)
 {
-	char		**new;
-	size_t		y;
+	t_lst_d	*tmp;
 
-	new = (char **)ft_calloc(size + 1, sizeof(char *));
-	if (!new)
-		return (NULL);
-	if (!arr)
-		return (new);
-	y = 0;
-	while (arr[y] && y < size)
+	if (head)
 	{
-		new[y] = arr[y];
-		y += 1;
+		tmp = *head;
+		if (tmp)
+		{
+			while (tmp->next)
+				tmp = tmp->next;
+			tmp->next = new;
+			new->prev = tmp;
+			new->next = NULL;
+		}
+		else
+			*head = new;
 	}
-	free(arr);
-	return (new);
 }

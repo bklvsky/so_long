@@ -1,33 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_realloc_charmtrx.c                              :+:      :+:    :+:   */
+/*   ft_strrealloc.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dselmy <dselmy@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: dselmy <dselmy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/07 19:00:00 by dselmy            #+#    #+#             */
-/*   Updated: 2022/01/04 01:25:31 by dselmy           ###   ########.fr       */
+/*   Created: 2021/12/25 20:16:30 by dselmy            #+#    #+#             */
+/*   Updated: 2021/12/25 20:20:00 by dselmy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	**ft_realloc_charmtrx(char **arr, size_t size)
+char	*ft_strrealloc(char *old, size_t new_size)
 {
-	char		**new;
-	size_t		y;
+	char	*new;
 
-	new = (char **)ft_calloc(size + 1, sizeof(char *));
+	new = (char *)ft_calloc(new_size, sizeof(char));
 	if (!new)
-		return (NULL);
-	if (!arr)
-		return (new);
-	y = 0;
-	while (arr[y] && y < size)
 	{
-		new[y] = arr[y];
-		y += 1;
+		free(old);
+		return (NULL);
 	}
-	free(arr);
+	ft_strlcpy(new, old, new_size);
+	free(old);
 	return (new);
 }

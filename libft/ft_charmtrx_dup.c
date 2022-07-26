@@ -1,33 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_realloc_charmtrx.c                              :+:      :+:    :+:   */
+/*   ft_charmtrx_dup.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dselmy <dselmy@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/07 19:00:00 by dselmy            #+#    #+#             */
-/*   Updated: 2022/01/04 01:25:31 by dselmy           ###   ########.fr       */
+/*   Created: 2021/12/23 19:14:13 by dselmy            #+#    #+#             */
+/*   Updated: 2022/01/04 02:03:13 by dselmy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	**ft_realloc_charmtrx(char **arr, size_t size)
+char	**ft_charmtrx_dup(char **src)
 {
-	char		**new;
-	size_t		y;
+	char	**new;
+	int		i;
 
-	new = (char **)ft_calloc(size + 1, sizeof(char *));
+	new = (char **)ft_calloc(ft_charmtrx_len(src) + 1, sizeof(char *));
 	if (!new)
 		return (NULL);
-	if (!arr)
-		return (new);
-	y = 0;
-	while (arr[y] && y < size)
+	i = 0;
+	while (src[i])
 	{
-		new[y] = arr[y];
-		y += 1;
+		new[i] = ft_strdup(src[i]);
+		if (!new[i])
+		{
+			ft_free_charmtrx(new);
+			return (NULL);
+		}
+		i++;
 	}
-	free(arr);
 	return (new);
 }

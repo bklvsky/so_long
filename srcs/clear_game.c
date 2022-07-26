@@ -6,7 +6,7 @@
 /*   By: dselmy <dselmy@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 17:37:55 by dselmy            #+#    #+#             */
-/*   Updated: 2021/10/28 17:55:33 by dselmy           ###   ########.fr       */
+/*   Updated: 2021/11/07 02:47:03 by dselmy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	clear_game(t_win *win)
 {
 	clear_img_buf(win->mlx, win->env, 4);
-	clear_img_buf(win->mlx, win->cllct, CLLCT_ANIMATION);
+	clear_img_buf(win->mlx, win->cllct, 1);
 	clear_img_buf(win->mlx, win->plr, 4);
 	if (win->img->img)
 		mlx_destroy_image(win->mlx, win->img->img);

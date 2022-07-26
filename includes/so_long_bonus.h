@@ -6,7 +6,7 @@
 /*   By: dselmy <dselmy@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 19:58:03 by dselmy            #+#    #+#             */
-/*   Updated: 2021/10/28 17:52:46 by dselmy           ###   ########.fr       */
+/*   Updated: 2021/11/10 17:54:55 by dselmy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include "./so_long.h"
 
 # define ANIM_SPEED 300
-# define ENEMY_ANIM_SPEED 1000
 # define EN_MOVES_FOR_SQUARE 2
 
 int		render_all(t_data *all);

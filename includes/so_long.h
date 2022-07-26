@@ -6,7 +6,7 @@
 /*   By: dselmy <dselmy@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 00:03:01 by dselmy            #+#    #+#             */
-/*   Updated: 2021/10/28 17:51:10 by dselmy           ###   ########.fr       */
+/*   Updated: 2022/07/27 01:53:11 by dselmy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,29 +19,58 @@
 # include <errno.h>
 # include <string.h>
 # include <stdio.h>
+# include <unistd.h>
 
-# define SCALE 40
+# define SCALE 64
 
-# define FLOOR_TEX_PATH "./textures_xpm/frog/floor_tex.xpm"
-# define WALL_TEX_PATH "./textures_xpm/frog/wall_tex.xpm"
-# define EXIT_ON_TEX_PATH "./textures_xpm/frog/exit_open_tex.xpm"
-# define EXIT_OFF_TEX_PATH "./textures_xpm/frog/exit_close_tex.xpm"
+# ifdef MEME
 
-# define CLLCT_TEX_PATH "./textures_xpm/frog/collect_sprite_tex.xpm"
-# define CLLCT_2_TEX_PATH "./textures_xpm/frog/collect_sprite_2_tex.xpm"
-# define CLLCT_3_TEX_PATH "./textures_xpm/frog/collect_sprite_3_tex.xpm"
+#   define FLOOR_TEX_PATH "./textures_xpm/meme/floor_tex.xpm"
+#  define WALL_TEX_PATH "./textures_xpm/meme/wall_tex.xpm"
+#  define EXIT_ON_TEX_PATH "./textures_xpm/meme/exit_open_tex.xpm"
+#  define EXIT_OFF_TEX_PATH "./textures_xpm/meme/exit_close_tex.xpm"
+ 
+#  define CLLCT_TEX_PATH "./textures_xpm/meme/collect_sprite_tex.xpm"
+#  define CLLCT_2_TEX_PATH "./textures_xpm/meme/collect_sprite_2_tex.xpm"
+#  define CLLCT_3_TEX_PATH "./textures_xpm/meme/collect_sprite_3_tex.xpm"
+ 
+#  define PLR_UP_PATH "./textures_xpm/meme/plr_up_tex.xpm"
+#  define PLR_DOWN_PATH "./textures_xpm/meme/plr_down_tex.xpm"
+#  define PLR_LEFT_PATH "./textures_xpm/meme/plr_left_tex.xpm"
+#  define PLR_RIGHT_PATH "./textures_xpm/meme/plr_right_tex.xpm"
+ 
+#  define ENEMY_1_TEX_PATH "./textures_xpm/meme/enemy_1_tex.xpm"
+#  define ENEMY_2_TEX_PATH "./textures_xpm/meme/enemy_2_tex.xpm"
+#  define ENEMY_3_TEX_PATH "./textures_xpm/meme/enemy_3_tex.xpm"
+#  define ENEMY_4_TEX_PATH "./textures_xpm/meme/enemy_4_tex.xpm"
+#  define ENEMY_5_TEX_PATH "./textures_xpm/meme/enemy_5_tex.xpm"
+#  define ENEMY_6_TEX_PATH "./textures_xpm/meme/enemy_6_tex.xpm"
 
-# define PLR_UP_PATH "./textures_xpm/frog/plr_up_tex.xpm"
-# define PLR_DOWN_PATH "./textures_xpm/frog/plr_down_tex.xpm"
-# define PLR_LEFT_PATH "./textures_xpm/frog/plr_left_tex.xpm"
-# define PLR_RIGHT_PATH "./textures_xpm/frog/plr_right_tex.xpm"
+# else
 
-# define ENEMY_1_TEX_PATH "./textures_xpm/frog/enemy_1_tex.xpm"
-# define ENEMY_2_TEX_PATH "./textures_xpm/frog/enemy_2_tex.xpm"
-# define ENEMY_3_TEX_PATH "./textures_xpm/frog/enemy_3_tex.xpm"
-# define ENEMY_4_TEX_PATH "./textures_xpm/frog/enemy_4_tex.xpm"
-# define ENEMY_5_TEX_PATH "./textures_xpm/frog/enemy_5_tex.xpm"
-# define ENEMY_6_TEX_PATH "./textures_xpm/frog/enemy_6_tex.xpm"
+#  define FLOOR_TEX_PATH "./textures_xpm/frog/floor_tex.xpm"
+#  define WALL_TEX_PATH "./textures_xpm/frog/wall_tex.xpm"
+#  define EXIT_ON_TEX_PATH "./textures_xpm/frog/exit_open_tex.xpm"
+#  define EXIT_OFF_TEX_PATH "./textures_xpm/frog/exit_close_tex.xpm"
+ 
+#  define CLLCT_TEX_PATH "./textures_xpm/frog/collect_sprite_tex.xpm"
+#  define CLLCT_2_TEX_PATH "./textures_xpm/frog/collect_sprite_2_tex.xpm"
+#  define CLLCT_3_TEX_PATH "./textures_xpm/frog/collect_sprite_3_tex.xpm"
+ 
+#  define PLR_UP_PATH "./textures_xpm/frog/plr_up_tex.xpm"
+#  define PLR_DOWN_PATH "./textures_xpm/frog/plr_down_tex.xpm"
+#  define PLR_LEFT_PATH "./textures_xpm/frog/plr_left_tex.xpm"
+#  define PLR_RIGHT_PATH "./textures_xpm/frog/plr_right_tex.xpm"
+ 
+#  define ENEMY_1_TEX_PATH "./textures_xpm/frog/enemy_1_tex.xpm"
+#  define ENEMY_2_TEX_PATH "./textures_xpm/frog/enemy_2_tex.xpm"
+#  define ENEMY_3_TEX_PATH "./textures_xpm/frog/enemy_3_tex.xpm"
+#  define ENEMY_4_TEX_PATH "./textures_xpm/frog/enemy_4_tex.xpm"
+#  define ENEMY_5_TEX_PATH "./textures_xpm/frog/enemy_5_tex.xpm"
+#  define ENEMY_6_TEX_PATH "./textures_xpm/frog/enemy_6_tex.xpm"
+
+# endif
+
 
 # define KEY_W 119
 # define KEY_S 115
@@ -63,13 +92,8 @@
 # define PLR_LEFT 2
 # define PLR_RIGHT 3
 
-# ifdef BONUS
-#  define ENEMY_ANIMATION 6
-#  define CLLCT_ANIMATION 3
-# else
-#  define ENEMY_ANIMATION 0
-#  define CLLCT_ANIMATION 1
-# endif
+# define ENEMY_ANIMATION 6
+# define CLLCT_ANIMATION 3
 
 typedef struct s_img
 {
@@ -124,7 +148,6 @@ typedef struct s_game
 	int			*data;
 	t_plr		plr;
 	int			anim_flag;
-	int			move_flag;
 	int			cllct_state;
 	t_enemy		*enemy;
 	int			enemy_num;
