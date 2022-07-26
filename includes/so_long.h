@@ -6,7 +6,7 @@
 /*   By: dselmy <dselmy@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 00:03:01 by dselmy            #+#    #+#             */
-/*   Updated: 2022/07/27 01:53:11 by dselmy           ###   ########.fr       */
+/*   Updated: 2022/07/27 02:02:37 by dselmy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,12 @@
 # include <stdio.h>
 # include <unistd.h>
 
-# define SCALE 64
+
 
 # ifdef MEME
 
-#   define FLOOR_TEX_PATH "./textures_xpm/meme/floor_tex.xpm"
+#  define SCALE 64
+#  define FLOOR_TEX_PATH "./textures_xpm/meme/floor_tex.xpm"
 #  define WALL_TEX_PATH "./textures_xpm/meme/wall_tex.xpm"
 #  define EXIT_ON_TEX_PATH "./textures_xpm/meme/exit_open_tex.xpm"
 #  define EXIT_OFF_TEX_PATH "./textures_xpm/meme/exit_close_tex.xpm"
@@ -48,6 +49,7 @@
 
 # else
 
+#  define SCALE 40
 #  define FLOOR_TEX_PATH "./textures_xpm/frog/floor_tex.xpm"
 #  define WALL_TEX_PATH "./textures_xpm/frog/wall_tex.xpm"
 #  define EXIT_ON_TEX_PATH "./textures_xpm/frog/exit_open_tex.xpm"
